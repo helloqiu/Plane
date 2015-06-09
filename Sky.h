@@ -17,13 +17,15 @@ private:
 	void moveAll();
 	std::vector<sf::Sprite *> spriteVector;
 	std::vector<Bullet*> herobulletVector;
+	std::vector<Bullet*> enemybulletVector;
+	std::vector<sf::Sprite *> enemy_1Vector;
 };
 // Firer class
 class Firer{
 public:
 	Firer(Firer &firer);
 	Firer(Sky &sky , LoadTexture &loadtexture);
-	void fire(sf::Vector2f positon );
+	void fire(sf::Vector2f positon , int type);
 private:
 	Bullet *bullet;
 	Sky *sky;

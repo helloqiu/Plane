@@ -3,6 +3,10 @@ Time : 2015-6-9 8:42
 Description : begin to rewrite it
 Time : 2015-6-9 16:17
 Dexcription : I add the bullet
+Time :2015-6-9 20:55  
+Description : begin to add the enemy
+Time :2015-6-9 21:51
+Description : finish the enemy
 */
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -13,6 +17,9 @@ Dexcription : I add the bullet
 #include "Bullet.h"
 #include "Firer.h"
 int main(void){
+	// the clock to control the enemy
+	sf::Clock enemyClock;
+	enemyClock.restart();
 	// the window
 	sf::RenderWindow window(sf::VideoMode(480 , 800) , "plane");
 	window.setFramerateLimit(60);
@@ -46,6 +53,8 @@ int main(void){
 	sky.add(hero);
 	// the controller
 	Controller controller;
+	// the enemy_1 pointer
+	Plane *enemy;
 	// the loop
 	while (window.isOpen()){
 		sf::Event event;
@@ -54,7 +63,19 @@ int main(void){
 				window.close();
 			}
 		}
+		// random add enemy
+		if((rand() % 100 == 1) && (enemyClock.getElapsedTime().asSeconds() > sf::seconds(0.5f).asSeconds())){
+			enemy = new Plane(ENEMY_1);
+			enemy->setTexture(*loadtexture.getTextureByName("enemy1"));
+			enemy->setOrigin(enemy->getTexture()->getSize().x / 2 , enemy->getTexture()->getSize().y / 2);
+			enemy->setFirer(firer);
+			enemy->setPosition(hero.getPosition().x , 0);
+			sky.add(*enemy);
+			enemy->fire();
+			enemyClock.restart();
+		}
 		window.clear();
+		window.draw(backgroundSprite);
 		controller.control(hero);
 		sky.draw(window);
 		window.display();

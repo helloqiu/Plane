@@ -6,8 +6,8 @@ Plane::Plane(int type){
 	bulletSound.setBuffer(bulletSoundBuffer);
 }
 void Plane::fire(){
-	if(planeClock.getElapsedTime().asSeconds() > sf::seconds(0.2f).asSeconds()){
-		planeFirer->fire(this->getPosition());
+	if((planeClock.getElapsedTime().asSeconds() > sf::seconds(0.2f).asSeconds()) || (this->type != HERO)){
+		planeFirer->fire(this->getPosition() , this->getType());
 		planeClock.restart();
 		bulletSound.play();
 	}

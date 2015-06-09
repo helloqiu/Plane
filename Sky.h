@@ -42,5 +42,7 @@ private:
 	sf::Clock planeClock;
 	int type;
 	Firer *planeFirer;
+	sf::Sound bulletSound;
+	sf::SoundBuffer bulletSoundBuffer;
 };
 #endif

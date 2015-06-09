@@ -7,6 +7,7 @@
 #include "Plane.h"
 #include "LoadTexture.h"
 #include <iostream>
+// Sky Class
 class Sky{
 public:
 	void add(sf::Sprite &sprite);
@@ -17,6 +18,7 @@ private:
 	std::vector<sf::Sprite *> spriteVector;
 	std::vector<Bullet*> herobulletVector;
 };
+// Firer class
 class Firer{
 public:
 	Firer(Firer &firer);
@@ -27,6 +29,7 @@ private:
 	Sky *sky;
 	LoadTexture *loadtexture;
 };
+// Plane class
 #define HERO 1
 #define ENEMY_1 2
 class Plane:public sf::Sprite{

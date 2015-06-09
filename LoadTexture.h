@@ -316,6 +316,6 @@ if (imagePosition != NULL){
 	private:
 		vector<sf::Texture *> textureVector;
 		vector<ImagePosition*> imageVector;
-		ImagePosition* imagePosition = NULL;
+		ImagePosition* imagePosition;
 };
 #endif

@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include <vector>
 #include "Plane.h"
+#include "LoadTexture.h"
 #include <iostream>
 class Sky{
 public:
@@ -15,5 +16,28 @@ private:
 	void moveAll();
 	std::vector<sf::Sprite *> spriteVector;
 	std::vector<Bullet*> herobulletVector;
+};
+class Firer{
+public:
+	Firer(Firer &firer);
+	Firer(Sky &sky , LoadTexture &loadtexture);
+	void fire(sf::Vector2f positon );
+private:
+	Bullet *bullet;
+	Sky *sky;
+	LoadTexture *loadtexture;
+};
+#define HERO 1
+#define ENEMY_1 2
+class Plane:public sf::Sprite{
+public:
+	Plane(int type);
+	void setFirer(Firer &firer);
+	void fire();
+	int getType();
+private:
+	sf::Clock planeClock;
+	int type;
+	Firer *planeFirer;
 };
 #endif

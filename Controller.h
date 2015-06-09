@@ -1,6 +1,6 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
-#include "Plane.h"
+#include "Sky.h"
 #define SPEED 5
 class Controller{
 public:

@@ -1,6 +1,8 @@
 /*
 Time : 2015-6-9 8:42
 Description : begin to rewrite it
+Time : 2015-6-9 16:17
+Dexcription : I add the bullet
 */
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -31,12 +33,8 @@ int main(void){
 	LoadTexture loadtexture;
 	loadtexture.initLoad();
 	loadtexture.loadFromFile("resource/shoot.png");
-	// bullet
-	Bullet bullet(HERO_BULLET);
-	bullet.setTexture(*loadtexture.getTextureByName("bullet2"));
-	bullet.setOrigin(bullet.getTexture()->getSize().x / 2 , bullet.getTexture()->getSize().y / 2);
 	// firer
-	Firer firer(bullet,sky);
+	Firer firer(sky , loadtexture);
 	// hero
 	Plane hero(HERO);
 	hero.setTexture(*loadtexture.getTextureByName("hero2"));

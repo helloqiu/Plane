@@ -1,13 +1,17 @@
-#include "Plane.h"
+#include "Sky.h"
 Plane::Plane(int type){
 	this->type = type;
+	planeClock.restart();
 }
-void fire(){
-	firer->fire(this->getPosititon());
+void Plane::fire(){
+	if(planeClock.getElapsedTime().asSeconds() > sf::seconds(0.2f).asSeconds()){
+		planeFirer->fire(this->getPosition());
+		planeClock.restart();
+	}
 }
 int Plane::getType(){
 	return type;
 }
 void Plane::setFirer(Firer &firer){
-	this->firer = &firer;
+	this->planeFirer = &firer;
 }

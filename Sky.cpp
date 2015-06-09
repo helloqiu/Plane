@@ -12,16 +12,15 @@ void Sky::add(Bullet *bullet){
 
 void Sky::draw(sf::RenderWindow &window){
 	// move all 
-	moveAll();
-	// draw the hero bullet
-	for (int i = 0 ; i < herobulletVector.size() ; i ++){
-		window.draw(*herobulletVector.at(i));
-	}
+	this->moveAll();
 	// draw the hero
 	for (int i = 0 ; i < spriteVector.size() ; i ++){
 		window.draw(*spriteVector.at(i));
 	}
-
+	// draw the hero bullet
+	for (int i = 0 ; i < herobulletVector.size() ; i ++){
+		window.draw(*herobulletVector.at(i));
+	}
 }
 void Sky::moveAll(){
 	int i = 0;

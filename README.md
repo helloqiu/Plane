@@ -6,3 +6,5 @@ Now the window can show a hero.
 I add the bullet and fix the problem.  
 ###2015-6-9 20:43  
 I find that I used the wrong user to pushT_T  
+###2015-6-9 21:52  
+finish the enemy.  

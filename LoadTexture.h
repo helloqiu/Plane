@@ -309,6 +309,9 @@ imagePosition -> position[0] = 69;
 imagePosition -> position[1] = 78;
 imagePosition -> position[2] = 9;
 imagePosition -> position[3] = 21;
+if (imagePosition != NULL){
+	imageVector.push_back(imagePosition);
+}
 }
 	private:
 		vector<sf::Texture *> textureVector;

@@ -7,10 +7,18 @@ Description : begin to rewrite it
 #include "Sky.h"
 #include "LoadTexture.h"
 #include "Plane.h"
+#include "Controller.h"
+#include "Bullet.h"
+#include "Firer.h"
 int main(void){
 	// the window
 	sf::RenderWindow window(sf::VideoMode(480 , 800) , "plane");
 	window.setFramerateLimit(60);
+	// background music
+	sf::Music backgroundMusic;
+	backgroundMusic.openFromFile("resource/sounds/background.ogg");
+	backgroundMusic.setLoop(true);
+	backgroundMusic.play();
 	// background
 	sf::Sprite backgroundSprite;
 	sf::Texture backgroundTexture;
@@ -23,13 +31,22 @@ int main(void){
 	LoadTexture loadtexture;
 	loadtexture.initLoad();
 	loadtexture.loadFromFile("resource/shoot.png");
+	// bullet
+	Bullet bullet(HERO_BULLET);
+	bullet.setTexture(*loadtexture.getTextureByName("bullet2"));
+	bullet.setOrigin(bullet.getTexture()->getSize().x / 2 , bullet.getTexture()->getSize().y / 2);
+	// firer
+	Firer firer(bullet,sky);
 	// hero
 	Plane hero(HERO);
 	hero.setTexture(*loadtexture.getTextureByName("hero2"));
 	// set hero position
-	hero.setPosition(window.getSize().x / 2, window.getSize().y - hero.getTexture()->getSize().y);
+	hero.setOrigin(hero.getTexture()->getSize().x / 2 , hero.getTexture()->getSize().y / 2);
+	hero.setPosition(window.getSize().x / 2, window.getSize().y - hero.getTexture()->getSize().y / 2);
+	hero.setFirer(firer);
 	sky.add(hero);
-
+	// the controller
+	Controller controller;
 	// the loop
 	while (window.isOpen()){
 		sf::Event event;
@@ -39,6 +56,7 @@ int main(void){
 			}
 		}
 		window.clear();
+		controller.control(hero);
 		sky.draw(window);
 		window.display();
 	}

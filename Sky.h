@@ -46,9 +46,11 @@ public:
 	int getType();
 	void kill(Sky *sky);
 	bool ifCouldErase();
-	void setAnimation(Animation &animation);
 	bool ifkill();
 	Animation *getAnimation();
+	void moveThis();
+	void setTextureVector(std::vector<sf::Texture*> *v);
+	void setTimePerTexture(float time);
 private:
 	Animation killAnimation;
 	sf::Clock planeClock;
@@ -57,5 +59,10 @@ private:
 	sf::Sound bulletSound;
 	sf::SoundBuffer bulletSoundBuffer;
 	bool ifStop;
+	bool ifKilled;
+	int nowTexture;
+	std::vector<sf::Texture*> *textureVector;
+	sf::Clock textureClock;
+	float timePerTexture;
 };
 #endif

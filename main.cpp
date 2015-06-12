@@ -9,6 +9,8 @@ Time :2015-6-9 21:51
 Description : finish the enemy
 Time :2015-6-12 16:02
 Description : begin to rewrite the plane class 
+Time :2015-6-12 18:12
+Description : finished to rewrite the plane class
 */
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -56,14 +58,13 @@ int main(void){
 	// the controller
 	Controller controller;
 	// the enemy_1 pointer
-	// animation
-	Animation enemy_1Animation;
-	enemy_1Animation.addTexture(*loadtexture.getTextureByName("enemy1_down1"));
-	enemy_1Animation.addTexture(*loadtexture.getTextureByName("enemy1_down2"));
-	enemy_1Animation.addTexture(*loadtexture.getTextureByName("enemy1_down3"));
-	enemy_1Animation.addTexture(*loadtexture.getTextureByName("enemy1_down4"));
-	enemy_1Animation.setTime(1);
 	Plane *enemy;
+	// the enemy_1 vector
+	std::vector<sf::Texture*> enemy_1TextureVector;
+	enemy_1TextureVector.push_back(loadtexture.getTextureByName("enemy1_down1"));
+	enemy_1TextureVector.push_back(loadtexture.getTextureByName("enemy1_down2"));
+	enemy_1TextureVector.push_back(loadtexture.getTextureByName("enemy1_down3"));
+	enemy_1TextureVector.push_back(loadtexture.getTextureByName("enemy1_down4"));
 	// the loop
 	while (window.isOpen()){
 		sf::Event event;
@@ -78,8 +79,9 @@ int main(void){
 			enemy->setTexture(*loadtexture.getTextureByName("enemy1"));
 			enemy->setOrigin(enemy->getTexture()->getSize().x / 2 , enemy->getTexture()->getSize().y / 2);
 			enemy->setFirer(firer);
+			enemy->setTimePerTexture(0.05f);
 			enemy->setPosition(hero.getPosition().x , 0);
-			enemy->setAnimation(enemy_1Animation);
+			enemy->setTextureVector(&enemy_1TextureVector);
 			sky.add(*enemy);
 			enemy->fire();
 			enemyClock.restart();

@@ -8,3 +8,5 @@ I add the bullet and fix the problem.
 I find that I used the wrong user to pushT_T  
 ###2015-6-9 21:52  
 finish the enemy.  
+###2015-6-12 18:13  
+finish to rewrite the plane class.  

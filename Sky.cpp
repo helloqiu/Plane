@@ -1,11 +1,4 @@
 #include "Sky.h"
-float real(float num){
-	if (num < 0){
-		return -num;
-	}else{
-		return num;
-	}
-}
 void Sky::add(sf::Sprite &sprite){
 	if(((Plane*)(&sprite))->getType() == HERO){
 		std::cout << "add Plane\n";
@@ -48,10 +41,6 @@ void Sky::draw(sf::RenderWindow &window){
 	}
 	// draw the enemy
 	for (int i = 0 ; i < enemy_1Vector.size() ; i ++){
-		if (((Plane*)enemy_1Vector.at(i))->ifkill()){
-			((Plane*)enemy_1Vector.at(i))->getAnimation()->play();
-			continue;
-		}
 		window.draw(*enemy_1Vector.at(i));
 	}
 	// draw enemy bullet
@@ -89,23 +78,11 @@ void Sky::moveAll(){
 	while(i < enemy_1Vector.size()){
 		if((enemy_1Vector.at(i)->getPosition().y - enemy_1Vector.at(i)->getTexture()->getSize().y / 2 > 800)||(((Plane*)enemy_1Vector.at(i))->ifCouldErase())){
 			// erase the enemy
-			
-			
-			for (int j = 0 ; j < animationVector.size() ; j ++){
-				if (animationVector.at(j) == enemyNum[i]){
-					cout << "find the animation : " << i <<"\n";
-					enemyNum[i] = NULL;
-					animationVector.erase(animationVector.begin() + j);
-					break;
-				}
-			}
-			
-
 			delete enemy_1Vector.at(i);
 			enemy_1Vector.erase(enemy_1Vector.begin()+i);
 			continue;
 		}
-		enemy_1Vector.at(i)->move(0, 3);
+		((Plane*)enemy_1Vector.at(i))->moveThis();
 		i ++;
 	}
 }
@@ -115,9 +92,7 @@ void Sky::check(){
 	while(i < herobulletVector.size()){
 		for(int j = 0 ; j < enemy_1Vector.size() ; j ++){
 			if (herobulletVector.at(i)->getGlobalBounds().intersects(enemy_1Vector.at(j)->getGlobalBounds()) && !((Plane*)enemy_1Vector.at(j))->ifkill()){
-				((Plane*)enemy_1Vector.at(j))->kill(this);
-				enemyNum[j] = animationVector.at(animationVector.size() - 1);
-				std::cout << "sprite pointer : " << enemyNum[j] << "\n";
+				((Plane*)enemy_1Vector.at(j))->kill(this); 
 				delete herobulletVector.at(i);
 				herobulletVector.erase(herobulletVector.begin() + i);
 				tmp = true;

@@ -8,6 +8,8 @@ Plane::Plane(int type){
 	bulletSoundBuffer.loadFromFile("resource/sounds/bullet.ogg");
 	bulletSound.setBuffer(bulletSoundBuffer);
 	nowTexture = 0;
+	downSoundbuffer.loadFromFile("resource/sounds/enemy1_down.ogg");
+	downSound.setBuffer(downSoundbuffer);
 }
 void Plane::fire(){
 	if((planeClock.getElapsedTime().asSeconds() > sf::seconds(0.2f).asSeconds()) || (this->type != HERO)){
@@ -26,6 +28,7 @@ void Plane::kill(Sky *sky){
 	ifKilled = true;
 	textureClock.restart();
 	this->setTexture(*textureVector->at(0));
+	downSound.play();
 }
 bool Plane::ifCouldErase(){
 	if(ifStop && ifKilled){

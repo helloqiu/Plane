@@ -61,5 +61,7 @@ private:
 	std::vector<sf::Texture*> *textureVector;
 	sf::Clock textureClock;
 	float timePerTexture;
+	sf::SoundBuffer downSoundbuffer;
+	sf::Sound downSound;
 };
 #endif

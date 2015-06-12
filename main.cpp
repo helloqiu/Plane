@@ -21,6 +21,7 @@ Description : finished to rewrite the plane class
 #include "Bullet.h"
 #include "Firer.h"
 int main(void){
+	// the score
 	// the clock to control the enemy
 	sf::Clock enemyClock;
 	enemyClock.restart();
@@ -74,7 +75,7 @@ int main(void){
 			}
 		}
 		// random add enemy
-		if((rand() % 10 == 1) && (enemyClock.getElapsedTime().asSeconds() > sf::seconds(0.5f).asSeconds())){
+		if((rand() % (100 / sky.getLevel()) == 1) && (enemyClock.getElapsedTime().asSeconds() > sf::seconds(0.5f).asSeconds())){
 			enemy = new Plane(ENEMY_1);
 			enemy->setTexture(*loadtexture.getTextureByName("enemy1"));
 			enemy->setOrigin(enemy->getTexture()->getSize().x / 2 , enemy->getTexture()->getSize().y / 2);

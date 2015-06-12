@@ -1,4 +1,23 @@
 #include "Sky.h"
+Sky::Sky(){
+	score = 0;
+	level = 1;
+	ss_Score.str("");
+	ss_Score << score;
+	string_Score = ss_Score.str();
+	text_Score.setString("Score : " + string_Score);
+	font.loadFromFile("resource/fonts/myTTF.ttf");
+	text_Score.setFont(font);
+	text_Score.setPosition(5, 5);
+	text_Score.setColor(sf::Color::Black);
+	text_Score.setCharacterSize(24);
+
+	text_Level.setFont(font);
+	text_Level.setPosition((480 / 2) - 34 * 2 , 800 / 2);
+	text_Level.setColor(sf::Color::Black);
+	text_Level.setCharacterSize(34);
+	levelClock.restart();
+}
 void Sky::add(sf::Sprite &sprite){
 	if(((Plane*)(&sprite))->getType() == HERO){
 		std::cout << "add Plane\n";
@@ -47,6 +66,12 @@ void Sky::draw(sf::RenderWindow &window){
 	for (int i = 0 ; i < enemybulletVector.size() ; i ++){
 		window.draw(*enemybulletVector.at(i));
 	}
+	// draw the score
+	window.draw(text_Score);
+	// draw the level
+	if (levelClock.getElapsedTime().asSeconds() < sf::seconds(1.5f).asSeconds()){
+		window.draw(text_Level);
+	}
 }
 void Sky::moveAll(){
 	// move hero bullets
@@ -92,10 +117,25 @@ void Sky::check(){
 	while(i < herobulletVector.size()){
 		for(int j = 0 ; j < enemy_1Vector.size() ; j ++){
 			if (herobulletVector.at(i)->getGlobalBounds().intersects(enemy_1Vector.at(j)->getGlobalBounds()) && !((Plane*)enemy_1Vector.at(j))->ifkill()){
+				// kill the enemy
 				((Plane*)enemy_1Vector.at(j))->kill(this); 
 				delete herobulletVector.at(i);
 				herobulletVector.erase(herobulletVector.begin() + i);
 				tmp = true;
+				score += 10;
+				ss_Score.str("");
+				ss_Score << score;
+				string_Score = ss_Score.str();
+				text_Score.setString("Score : " + string_Score);
+				if(level != (score / 100) + 1){
+					// change the level
+					level = score / 100 + 1;
+					ss_Level.str("");
+				ss_Level << level;
+				string_Level = ss_Level.str();
+				text_Level.setString("Level " + string_Level);
+				levelClock.restart();
+				}
 				break;
 			}
 		}
@@ -105,4 +145,7 @@ void Sky::check(){
 		}
 		i++;
 	}
+}
+int Sky::getLevel(){
+	return level;
 }

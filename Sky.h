@@ -7,12 +7,15 @@
 #include "Plane.h"
 #include "LoadTexture.h"
 #include <iostream>
+#include <sstream>
 // Sky Class
 class Sky{
 public:
+	Sky();
 	void add(sf::Sprite &sprite);
 	void add(Bullet *bullet);
 	void draw(sf::RenderWindow &window);
+	int getLevel();
 private:
 	void moveAll();
 	void check();
@@ -22,6 +25,16 @@ private:
 	std::vector<sf::Sprite *> enemy_1Vector;
 	std::vector<sf::Sprite *> animationVector;
 	sf::Sprite* enemyNum[100];
+	int score;
+	int level;
+	sf::Text text_Score;
+	std::string string_Score;
+	std::stringstream ss_Score;
+	sf::Font font;
+	sf::Clock levelClock;
+	sf::Text text_Level;
+	std::string string_Level;
+	std::stringstream ss_Level;
 };
 // Firer class
 class Firer{

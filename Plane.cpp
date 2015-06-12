@@ -1,5 +1,6 @@
 #include "Sky.h"
 Plane::Plane(int type){
+	ifStop = false;
 	this->type = type;
 	planeClock.restart();
 	bulletSoundBuffer.loadFromFile("resource/sounds/bullet.ogg");
@@ -17,4 +18,26 @@ int Plane::getType(){
 }
 void Plane::setFirer(Firer &firer){
 	this->planeFirer = &firer;
+}
+void Plane::kill(Sky *sky){
+	ifStop = true;
+	killAnimation.setPosition(this->getPosition());
+	sky->add(*killAnimation.startPlay());
+	killAnimation.setPosition(this->getPosition());
+}
+void Plane::setAnimation(Animation &animation){
+	this->killAnimation = animation;
+}
+bool Plane::ifCouldErase(){
+	if(ifStop && killAnimation.ifStop()){
+		return true;
+	}else{
+		return false;
+	}
+}
+bool Plane::ifkill(){
+	return ifStop;
+}
+Animation* Plane::getAnimation(){
+	return &killAnimation;
 }

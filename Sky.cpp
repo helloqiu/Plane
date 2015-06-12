@@ -1,4 +1,11 @@
 #include "Sky.h"
+float real(float num){
+	if (num < 0){
+		return -num;
+	}else{
+		return num;
+	}
+}
 void Sky::add(sf::Sprite &sprite){
 	if(((Plane*)(&sprite))->getType() == HERO){
 		std::cout << "add Plane\n";
@@ -10,6 +17,8 @@ void Sky::add(sf::Sprite &sprite){
 		enemy_1Vector.push_back(&sprite);
 		return;
 	}
+	animationVector.push_back(&sprite);
+	std::cout << "add other\n";
 }
 void Sky::add(Bullet *bullet){
 	if (bullet->getType() == HERO_BULLET){
@@ -27,6 +36,8 @@ void Sky::add(Bullet *bullet){
 void Sky::draw(sf::RenderWindow &window){
 	// move all 
 	this->moveAll();
+	// check
+	check();
 	// draw the hero
 	for (int i = 0 ; i < spriteVector.size() ; i ++){
 		window.draw(*spriteVector.at(i));
@@ -37,6 +48,10 @@ void Sky::draw(sf::RenderWindow &window){
 	}
 	// draw the enemy
 	for (int i = 0 ; i < enemy_1Vector.size() ; i ++){
+		if (((Plane*)enemy_1Vector.at(i))->ifkill()){
+			((Plane*)enemy_1Vector.at(i))->getAnimation()->play();
+			continue;
+		}
 		window.draw(*enemy_1Vector.at(i));
 	}
 	// draw enemy bullet
@@ -72,13 +87,47 @@ void Sky::moveAll(){
 	// move enemy 
 	i = 0;
 	while(i < enemy_1Vector.size()){
-		if(enemy_1Vector.at(i)->getPosition().y - enemy_1Vector.at(i)->getTexture()->getSize().y / 2 > 800){
+		if((enemy_1Vector.at(i)->getPosition().y - enemy_1Vector.at(i)->getTexture()->getSize().y / 2 > 800)||(((Plane*)enemy_1Vector.at(i))->ifCouldErase())){
 			// erase the enemy
+			
+			
+			for (int j = 0 ; j < animationVector.size() ; j ++){
+				if (animationVector.at(j) == enemyNum[i]){
+					cout << "find the animation : " << i <<"\n";
+					enemyNum[i] = NULL;
+					animationVector.erase(animationVector.begin() + j);
+					break;
+				}
+			}
+			
+
 			delete enemy_1Vector.at(i);
 			enemy_1Vector.erase(enemy_1Vector.begin()+i);
 			continue;
 		}
 		enemy_1Vector.at(i)->move(0, 3);
 		i ++;
+	}
+}
+void Sky::check(){
+	int i = 0;
+	bool tmp = false;
+	while(i < herobulletVector.size()){
+		for(int j = 0 ; j < enemy_1Vector.size() ; j ++){
+			if (herobulletVector.at(i)->getGlobalBounds().intersects(enemy_1Vector.at(j)->getGlobalBounds()) && !((Plane*)enemy_1Vector.at(j))->ifkill()){
+				((Plane*)enemy_1Vector.at(j))->kill(this);
+				enemyNum[j] = animationVector.at(animationVector.size() - 1);
+				std::cout << "sprite pointer : " << enemyNum[j] << "\n";
+				delete herobulletVector.at(i);
+				herobulletVector.erase(herobulletVector.begin() + i);
+				tmp = true;
+				break;
+			}
+		}
+		if (tmp){
+			tmp = false;
+			continue;
+		}
+		i++;
 	}
 }

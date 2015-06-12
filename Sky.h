@@ -7,6 +7,7 @@
 #include "Plane.h"
 #include "LoadTexture.h"
 #include <iostream>
+#include "Animation.h"
 // Sky Class
 class Sky{
 public:
@@ -15,10 +16,13 @@ public:
 	void draw(sf::RenderWindow &window);
 private:
 	void moveAll();
+	void check();
 	std::vector<sf::Sprite *> spriteVector;
 	std::vector<Bullet*> herobulletVector;
 	std::vector<Bullet*> enemybulletVector;
 	std::vector<sf::Sprite *> enemy_1Vector;
+	std::vector<sf::Sprite *> animationVector;
+	sf::Sprite* enemyNum[100];
 };
 // Firer class
 class Firer{
@@ -40,11 +44,18 @@ public:
 	void setFirer(Firer &firer);
 	void fire();
 	int getType();
+	void kill(Sky *sky);
+	bool ifCouldErase();
+	void setAnimation(Animation &animation);
+	bool ifkill();
+	Animation *getAnimation();
 private:
+	Animation killAnimation;
 	sf::Clock planeClock;
 	int type;
 	Firer *planeFirer;
 	sf::Sound bulletSound;
 	sf::SoundBuffer bulletSoundBuffer;
+	bool ifStop;
 };
 #endif

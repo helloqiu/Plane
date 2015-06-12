@@ -7,7 +7,6 @@
 #include "Plane.h"
 #include "LoadTexture.h"
 #include <iostream>
-#include "Animation.h"
 // Sky Class
 class Sky{
 public:
@@ -47,12 +46,10 @@ public:
 	void kill(Sky *sky);
 	bool ifCouldErase();
 	bool ifkill();
-	Animation *getAnimation();
 	void moveThis();
 	void setTextureVector(std::vector<sf::Texture*> *v);
 	void setTimePerTexture(float time);
 private:
-	Animation killAnimation;
 	sf::Clock planeClock;
 	int type;
 	Firer *planeFirer;

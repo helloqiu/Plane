@@ -37,14 +37,10 @@ bool Plane::ifCouldErase(){
 bool Plane::ifkill(){
 	return ifKilled;
 }
-Animation* Plane::getAnimation(){
-	return &killAnimation;
-}
 void Plane::moveThis(){
 	if (this->type == ENEMY_1){
 		if (this->ifKilled){
 			if (textureClock.getElapsedTime().asSeconds() > sf::seconds(timePerTexture).asSeconds()){
-				std::cout << "texture move to : " << nowTexture+1 <<"\n";
 				nowTexture ++;
 				textureClock.restart();
 				if (nowTexture > 3){

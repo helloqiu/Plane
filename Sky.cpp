@@ -17,6 +17,8 @@ Sky::Sky(){
 	text_Level.setColor(sf::Color::Black);
 	text_Level.setCharacterSize(34);
 	levelClock.restart();
+	backgroundClock.restart();
+	ifStart = false;
 }
 void Sky::add(sf::Sprite &sprite){
 	if(((Plane*)(&sprite))->getType() == HERO){
@@ -72,6 +74,8 @@ void Sky::draw(sf::RenderWindow &window){
 	if (levelClock.getElapsedTime().asSeconds() < sf::seconds(1.5f).asSeconds()){
 		window.draw(text_Level);
 	}
+
+
 }
 void Sky::moveAll(){
 	// move hero bullets
@@ -148,4 +152,14 @@ void Sky::check(){
 }
 int Sky::getLevel(){
 	return level;
+}
+void Sky::guiChu(){
+	if (ifStart){
+		if (backgroundStartClock.getElapsedTime().asSeconds() > sf::seconds(0.5f).asSeconds()){
+			ifStart = false;
+			backgroundClock.restart();
+			return;
+		}
+		
+	}
 }

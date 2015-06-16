@@ -35,6 +35,10 @@ private:
 	sf::Text text_Level;
 	std::string string_Level;
 	std::stringstream ss_Level;
+	sf::Clock backgroundClock;
+	sf::Clock backgroundStartClock;
+	void guiChu();
+	bool ifStart;
 };
 // Firer class
 class Firer{

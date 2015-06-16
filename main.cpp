@@ -32,7 +32,7 @@ int main(void){
 	sf::Music backgroundMusic;
 	backgroundMusic.openFromFile("resource/sounds/background.ogg");
 	backgroundMusic.setLoop(true);
-	backgroundMusic.setVolume(20);
+	//backgroundMusic.setVolume(20);
 	backgroundMusic.play();
 	// background
 	sf::Sprite backgroundSprite;
